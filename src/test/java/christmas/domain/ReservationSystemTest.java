@@ -24,14 +24,14 @@ class ReservationSystemTest {
     @DisplayName("방문 날짜(일)를 지정한다.")
     @ValueSource(ints = {1, 7, 10, 16, 25, 31})
     @ParameterizedTest
-    void reserveDate(int reservationDay) {
+    void reserveDate(int visitDay) {
         // given & when
-        reservationSystem.reserveDate(reservationDay);
+        reservationSystem.reserveVisitDate(visitDay);
 
         // then
         assertThat(reservation)
-                .extracting("reservationDate")
+                .extracting("visitDate")
                 .extracting("date")
-                .isEqualTo(LocalDate.of(2023, 12, reservationDay));
+                .isEqualTo(LocalDate.of(2023, 12, visitDay));
     }
 }

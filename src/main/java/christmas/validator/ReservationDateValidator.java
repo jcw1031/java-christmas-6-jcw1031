@@ -1,6 +1,6 @@
 package christmas.validator;
 
-import christmas.domain.reservation.ReservationDate;
+import christmas.domain.reservation.VisitDate;
 import christmas.exception.InputErrorMessages;
 
 public class ReservationDateValidator {
@@ -12,7 +12,7 @@ public class ReservationDateValidator {
     }
 
     private static boolean isInvalidRangeDate(int reservationDate) {
-        return reservationDate < ReservationDate.START_RESERVATION_DATE
-                || reservationDate > ReservationDate.END_RESERVATION_DATE;
+        return reservationDate < VisitDate.START_RESERVATION_DATE
+                || reservationDate > VisitDate.END_RESERVATION_DATE;
     }
 }

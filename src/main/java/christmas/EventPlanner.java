@@ -18,12 +18,12 @@ public class EventPlanner {
 
     public void start() {
         outputView.printStartMessage();
-        repeatExecution(this::reserveDate);
+        repeatExecution(this::reserveVisitDate);
     }
 
-    private void reserveDate() {
+    private void reserveVisitDate() {
         int reservationDay = inputView.inputReservationDay();
-        reservationSystem.reserveDate(reservationDay);
+        reservationSystem.reserveVisitDate(reservationDay);
     }
 
     private void repeatExecution(Runnable runnable) {

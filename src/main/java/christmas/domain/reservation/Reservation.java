@@ -2,9 +2,9 @@ package christmas.domain.reservation;
 
 public class Reservation {
 
-    private ReservationDate reservationDate;
+    private VisitDate visitDate;
 
-    public void createReserveDate(int reservationDay) {
-        reservationDate = new ReservationDate(reservationDay);
+    public void createVisitDate(int visitDay) {
+        visitDate = new VisitDate(visitDay);
     }
 }
