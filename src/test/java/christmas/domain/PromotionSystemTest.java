@@ -24,7 +24,7 @@ class PromotionSystemTest {
     @DisplayName("방문 날짜(일)를 지정한다.")
     @ValueSource(ints = {1, 7, 10, 16, 25, 31})
     @ParameterizedTest
-    void reserveDate(int visitDay) {
+    void reserveVisitDate(int visitDay) {
         // given & when
         promotionSystem.reserveVisitDate(visitDay);
 
