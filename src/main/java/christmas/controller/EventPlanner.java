@@ -1,6 +1,8 @@
 package christmas.controller;
 
 import christmas.domain.PromotionSystem;
+import christmas.exception.IllegalInputException;
+import christmas.exception.InputErrorMessages;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -29,8 +31,8 @@ public class EventPlanner {
     private void repeatExecution(Runnable runnable) {
         try {
             runnable.run();
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+        } catch (IllegalInputException exception) {
+            System.out.println(InputErrorMessages.of(exception.getSubject()));
             repeatExecution(runnable);
         }
     }
