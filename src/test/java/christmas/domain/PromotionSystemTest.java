@@ -44,7 +44,7 @@ class PromotionSystemTest {
     @DisplayName("메뉴를 주문한다.")
     @ValueSource(strings = {"양송이수프-2", "티본스테이크-1,아이스크림-2", "타파스-2,해산물파스타-2,초코케이크-1,레드와인-2"})
     @ParameterizedTest
-    void reserveVisitDate(String orderMenusInput) {
+    void orderMenus(String orderMenusInput) {
         // given
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
