@@ -1,6 +1,6 @@
 package christmas;
 
-import christmas.domain.ReservationSystem;
+import christmas.domain.PromotionSystem;
 import christmas.domain.reservation.Reservation;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -10,7 +10,7 @@ public class Application {
         EventPlanner eventPlanner = new EventPlanner(
                 new OutputView(),
                 new InputView(),
-                new ReservationSystem(new Reservation())
+                new PromotionSystem(new Reservation())
         );
         eventPlanner.start();
     }

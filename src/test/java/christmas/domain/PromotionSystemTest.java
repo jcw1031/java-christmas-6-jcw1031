@@ -10,15 +10,15 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ReservationSystemTest {
+class PromotionSystemTest {
 
-    ReservationSystem reservationSystem;
+    PromotionSystem promotionSystem;
     Reservation reservation;
 
     @BeforeEach
     void setUp() {
         reservation = new Reservation();
-        reservationSystem = new ReservationSystem(reservation);
+        promotionSystem = new PromotionSystem(reservation);
     }
 
     @DisplayName("방문 날짜(일)를 지정한다.")
@@ -26,7 +26,7 @@ class ReservationSystemTest {
     @ParameterizedTest
     void reserveDate(int visitDay) {
         // given & when
-        reservationSystem.reserveVisitDate(visitDay);
+        promotionSystem.reserveVisitDate(visitDay);
 
         // then
         assertThat(reservation)

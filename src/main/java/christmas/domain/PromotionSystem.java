@@ -2,11 +2,11 @@ package christmas.domain;
 
 import christmas.domain.reservation.Reservation;
 
-public class ReservationSystem {
+public class PromotionSystem {
 
     private final Reservation reservation;
 
-    public ReservationSystem(Reservation reservation) {
+    public PromotionSystem(Reservation reservation) {
         this.reservation = reservation;
     }
 

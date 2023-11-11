@@ -1,6 +1,6 @@
 package christmas;
 
-import christmas.domain.ReservationSystem;
+import christmas.domain.PromotionSystem;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -8,12 +8,12 @@ public class EventPlanner {
 
     private final OutputView outputView;
     private final InputView inputView;
-    private final ReservationSystem reservationSystem;
+    private final PromotionSystem promotionSystem;
 
-    public EventPlanner(OutputView outputView, InputView inputView, ReservationSystem reservationSystem) {
+    public EventPlanner(OutputView outputView, InputView inputView, PromotionSystem promotionSystem) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.reservationSystem = reservationSystem;
+        this.promotionSystem = promotionSystem;
     }
 
     public void start() {
@@ -23,7 +23,7 @@ public class EventPlanner {
 
     private void reserveVisitDate() {
         int reservationDay = inputView.inputReservationDay();
-        reservationSystem.reserveVisitDate(reservationDay);
+        promotionSystem.reserveVisitDate(reservationDay);
     }
 
     private void repeatExecution(Runnable runnable) {
