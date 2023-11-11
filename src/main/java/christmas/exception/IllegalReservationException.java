@@ -1,6 +1,6 @@
 package christmas.exception;
 
-public abstract class IllegalReservationException extends IllegalArgumentException {
+public class IllegalReservationException extends IllegalArgumentException {
 
     private final ErrorSubject errorSubject;
 

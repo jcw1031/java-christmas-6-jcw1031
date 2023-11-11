@@ -3,6 +3,7 @@ package christmas.converter;
 import christmas.dto.MenuOrderDto;
 import christmas.dto.MenuOrdersDto;
 import christmas.exception.ErrorSubject;
+import christmas.validator.MenuOrderValidator;
 
 import java.util.List;
 
@@ -20,14 +21,17 @@ public class MenuOrdersConverter {
     }
 
     private static List<String[]> splitMenusNameAndQuantity(List<String> values) {
-        return values.stream()
+        List<String[]> result = values.stream()
                 .map(nameAndQuantity -> nameAndQuantity.split(ORDER_MENU_DELIMITER))
                 .toList();
+        MenuOrderValidator.validateOrderMenusInputFormat(result);
+        return result;
     }
 
     private static MenuOrderDto convertToDto(String[] nameAndQuantity) {
         String name = nameAndQuantity[MENU_NAME_INDEX];
         int quantity = NumberConverter.convert(nameAndQuantity[MENU_QUANTITY_INDEX], ErrorSubject.MENU);
+        MenuOrderValidator.validateOrderMenuQuantity(quantity);
         return new MenuOrderDto(name, quantity);
     }
 }

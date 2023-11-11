@@ -1,10 +1,13 @@
 package christmas.domain.reservation;
 
 import christmas.dto.MenuOrderDto;
+import christmas.validator.MenuOrderValidator;
 
 import java.util.List;
 
 public class Orders {
+
+    public static final int MAXIMUM_TOTAL_QUANTITY = 20;
 
     private final List<Order> orders;
 
@@ -16,6 +19,8 @@ public class Orders {
         List<Order> orders = menuOrders.stream()
                 .map(Order::from)
                 .toList();
+        MenuOrderValidator.validateDuplicateMenu(orders);
+        MenuOrderValidator.validateTotalQuantity(orders);
         return new Orders(orders);
     }
 }
