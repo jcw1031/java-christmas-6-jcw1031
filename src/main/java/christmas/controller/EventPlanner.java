@@ -1,4 +1,4 @@
-package christmas;
+package christmas.controller;
 
 import christmas.domain.PromotionSystem;
 import christmas.view.InputView;

@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.controller.EventPlanner;
 import christmas.domain.PromotionSystem;
 import christmas.domain.reservation.Reservation;
 import christmas.view.InputView;
