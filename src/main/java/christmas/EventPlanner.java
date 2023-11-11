@@ -23,7 +23,7 @@ public class EventPlanner {
 
     private void reserveDate() {
         int reservationDay = inputView.inputReservationDay();
-        reservationSystem.reserve(reservationDay);
+        reservationSystem.reserveDate(reservationDay);
     }
 
     private void repeatExecution(Runnable runnable) {

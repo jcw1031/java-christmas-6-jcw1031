@@ -4,7 +4,7 @@ public class Reservation {
 
     private ReservationDate reservationDate;
 
-    public void reserveDate(int reservationDay) {
+    public void createReserveDate(int reservationDay) {
         reservationDate = new ReservationDate(reservationDay);
     }
 }

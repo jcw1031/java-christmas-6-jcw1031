@@ -10,7 +10,7 @@ public class ReservationSystem {
         this.reservation = reservation;
     }
 
-    public void reserve(int reservationDay) {
-        reservation.reserveDate(reservationDay);
+    public void reserveDate(int reservationDay) {
+        reservation.createReserveDate(reservationDay);
     }
 }
