@@ -1,6 +1,6 @@
 package christmas.domain.reservation;
 
-import christmas.validator.ReservationDateValidator;
+import christmas.validator.VisitDateValidator;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -13,8 +13,13 @@ public class VisitDate {
 
     private final LocalDate date;
 
-    public VisitDate(int day) {
-        ReservationDateValidator.validateReservationDateRange(day);
-        date = LocalDate.of(Year.now().getValue(), Month.DECEMBER, day);
+    public VisitDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public static VisitDate of(int day) {
+        VisitDateValidator.validateReservationDateRange(day);
+        LocalDate date = LocalDate.of(Year.now().getValue(), Month.DECEMBER, day);
+        return new VisitDate(date);
     }
 }

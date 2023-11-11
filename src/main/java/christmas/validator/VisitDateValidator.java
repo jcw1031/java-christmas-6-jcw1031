@@ -1,14 +1,13 @@
 package christmas.validator;
 
 import christmas.domain.reservation.VisitDate;
-import christmas.exception.ErrorSubject;
-import christmas.exception.IllegalInputException;
+import christmas.exception.IllegalVisitDateException;
 
-public class ReservationDateValidator {
+public class VisitDateValidator {
 
     public static void validateReservationDateRange(int reservationDate) {
         if (isInvalidRangeDate(reservationDate)) {
-            throw new IllegalInputException(ErrorSubject.DATE);
+            throw new IllegalVisitDateException();
         }
     }
 

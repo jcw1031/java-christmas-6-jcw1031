@@ -1,7 +1,7 @@
 package christmas.domain.reservation;
 
 import christmas.exception.ErrorSubject;
-import christmas.exception.IllegalInputException;
+import christmas.exception.IllegalVisitDateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,8 +15,8 @@ class VisitDateTest {
     @ParameterizedTest
     void reserveDateFailWhenOutOfRange(int reservationDay) {
         // given & when & then
-        assertThatThrownBy(() -> new VisitDate(reservationDay))
-                .isInstanceOf(IllegalInputException.class)
+        assertThatThrownBy(() -> VisitDate.of(reservationDay))
+                .isInstanceOf(IllegalVisitDateException.class)
                 .extracting("errorSubject").isEqualTo(ErrorSubject.DATE);
     }
 }

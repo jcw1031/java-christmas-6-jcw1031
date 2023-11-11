@@ -1,7 +1,8 @@
 package christmas.controller;
 
 import christmas.domain.PromotionSystem;
-import christmas.exception.IllegalInputException;
+import christmas.dto.MenuOrdersDto;
+import christmas.exception.IllegalReservationException;
 import christmas.exception.InputErrorMessages;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -21,6 +22,7 @@ public class EventPlanner {
     public void start() {
         outputView.printStartMessage();
         repeatExecution(this::reserveVisitDate);
+        repeatExecution(this::orderMenus);
     }
 
     private void reserveVisitDate() {
@@ -28,11 +30,16 @@ public class EventPlanner {
         promotionSystem.reserveVisitDate(reservationDay);
     }
 
+    private void orderMenus() {
+        MenuOrdersDto menuOrdersDto = inputView.inputOrderMenus();
+        promotionSystem.orderMenus(menuOrdersDto);
+    }
+
     private void repeatExecution(Runnable runnable) {
         try {
             runnable.run();
-        } catch (IllegalInputException exception) {
-            System.out.println(InputErrorMessages.of(exception.getSubject()));
+        } catch (IllegalReservationException exception) {
+            System.out.println(InputErrorMessages.of(exception.getErrorSubject()));
             repeatExecution(runnable);
         }
     }

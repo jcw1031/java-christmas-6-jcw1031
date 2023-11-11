@@ -1,7 +1,7 @@
 package christmas.converter;
 
 import christmas.exception.ErrorSubject;
-import christmas.exception.IllegalInputException;
+import christmas.exception.IllegalVisitDateException;
 
 public class NumberConverter {
 
@@ -9,7 +9,7 @@ public class NumberConverter {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException exception) {
-            throw new IllegalInputException(errorSubject);
+            throw new IllegalVisitDateException();
         }
     }
 }
