@@ -47,4 +47,20 @@ class OrdersTest {
                 .isInstanceOf(IllegalMenuOrderException.class)
                 .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
     }
+
+    @DisplayName("음료만 주문한 경우 예외가 발생한다.")
+    @ValueSource(strings = {"제로콜라-2", "제로콜라-1,레드와인-2", "제로콜라-1,레드와인-1,샴페인-1"})
+    @ParameterizedTest
+    void orderMenusFailOnlyDrink(String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
+
+        //  when & then
+        assertThatThrownBy(() -> Orders.from(menuOrders))
+                .isInstanceOf(IllegalMenuOrderException.class)
+                .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
+    }
 }
