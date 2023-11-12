@@ -30,7 +30,7 @@ public class OrderMenusConverter {
 
     private static OrderMenuDto convertToDto(String[] nameAndQuantity) {
         String name = nameAndQuantity[MENU_NAME_INDEX];
-        int quantity = NumberConverter.convert(nameAndQuantity[MENU_QUANTITY_INDEX], ErrorSubject.MENU);
+        int quantity = NumberConverter.convert(nameAndQuantity[MENU_QUANTITY_INDEX], ErrorSubject.ORDER);
         MenuOrderValidator.validateOrderMenuQuantity(quantity);
         return new OrderMenuDto(name, quantity);
     }

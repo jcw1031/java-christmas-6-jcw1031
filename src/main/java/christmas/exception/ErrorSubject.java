@@ -3,7 +3,7 @@ package christmas.exception;
 public enum ErrorSubject {
 
     DATE("날짜"),
-    MENU("메뉴");
+    ORDER("주문");
 
     private final String name;
 

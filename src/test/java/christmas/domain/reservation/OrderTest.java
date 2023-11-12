@@ -29,6 +29,6 @@ class OrderTest {
         //  when & then
         assertThatThrownBy(() -> Orders.from(menuOrders))
                 .isInstanceOf(IllegalMenuOrderException.class)
-                .extracting("errorSubject").isEqualTo(ErrorSubject.MENU);
+                .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
     }
 }

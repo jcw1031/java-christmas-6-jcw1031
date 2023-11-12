@@ -49,12 +49,12 @@ class PromotionSystemTest {
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
         OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
-        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
 
         // when
-        promotionSystem.orderMenus(new OrderMenusDto(menuOrders));
+        promotionSystem.orderMenus(orderMenusDto);
 
-        List<Order> orders = menuOrders.stream()
+        List<Order> orders = orderMenuDtoList.stream()
                 .map(Order::from)
                 .toList();
 
@@ -66,5 +66,25 @@ class PromotionSystemTest {
                 .isNotNull()
                 .asList()
                 .contains(orders.toArray());
+    }
+
+    @DisplayName("주문 메뉴 내역을 생성한다.")
+    @ValueSource(strings = {"양송이수프-2", "티본스테이크-1,아이스크림-2", "타파스-2,해산물파스타-2,초코케이크-1,레드와인-2"})
+    @ParameterizedTest
+    void generateOrderMenusHistory(String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
+
+        // when
+        promotionSystem.orderMenus(orderMenusDto);
+        OrderMenusDto orderMenusHistory = promotionSystem.generateOrderMenusHistory();
+
+        // then
+        assertThat(orderMenusHistory)
+                .extracting("orderMenus")
+                .isEqualTo(orderMenuDtoList);
     }
 }

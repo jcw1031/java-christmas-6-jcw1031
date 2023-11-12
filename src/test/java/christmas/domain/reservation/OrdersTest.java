@@ -29,7 +29,7 @@ class OrdersTest {
         //  when & then
         assertThatThrownBy(() -> Orders.from(menuOrders))
                 .isInstanceOf(IllegalMenuOrderException.class)
-                .extracting("errorSubject").isEqualTo(ErrorSubject.MENU);
+                .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
     }
 
     @DisplayName("전체 주문 개수가 20개가 초과하는 경우 예외가 발생한다.")
@@ -45,6 +45,6 @@ class OrdersTest {
         //  when & then
         assertThatThrownBy(() -> Orders.from(menuOrders))
                 .isInstanceOf(IllegalMenuOrderException.class)
-                .extracting("errorSubject").isEqualTo(ErrorSubject.MENU);
+                .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
     }
 }
