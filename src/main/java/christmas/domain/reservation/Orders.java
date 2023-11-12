@@ -22,6 +22,7 @@ public class Orders {
                 .toList();
         MenuOrderValidator.validateDuplicateMenu(orders);
         MenuOrderValidator.validateTotalQuantity(orders);
+        MenuOrderValidator.validateMenusType(orders);
         return new Orders(orders);
     }
 

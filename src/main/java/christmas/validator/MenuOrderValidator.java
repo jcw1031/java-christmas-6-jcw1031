@@ -1,5 +1,6 @@
 package christmas.validator;
 
+import christmas.domain.reservation.MenuType;
 import christmas.domain.reservation.Order;
 import christmas.domain.reservation.Orders;
 import christmas.exception.IllegalMenuOrderException;
@@ -36,7 +37,18 @@ public class MenuOrderValidator {
                 .mapToInt(Order::getQuantity)
                 .sum();
         if (totalQuantity > Orders.MAXIMUM_TOTAL_QUANTITY) {
-            throw new IllegalMenuOrderException();
+            throw new IllegalMenuOrderException("**메뉴는 한 번에 최대 20개 까지만 주문할 수 있습니다!**");
         }
+    }
+
+    public static void validateMenusType(List<Order> orders) {
+        orders.stream()
+                .filter(MenuOrderValidator::isNotDrink)
+                .findAny()
+                .orElseThrow(() -> new IllegalMenuOrderException("**음료만 주문할 수 없습니다!**"));
+    }
+
+    private static boolean isNotDrink(Order order) {
+        return !order.isMenuTypeOf(MenuType.DRINK);
     }
 }

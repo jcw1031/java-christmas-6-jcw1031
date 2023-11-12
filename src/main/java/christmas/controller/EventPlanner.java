@@ -41,7 +41,7 @@ public class EventPlanner {
         try {
             runnable.run();
         } catch (IllegalReservationException exception) {
-            System.out.println(InputErrorMessages.of(exception.getErrorSubject()));
+            System.out.println(InputErrorMessages.of(exception.getErrorSubject(), exception.getAdditionalMessage()));
             repeatExecution(runnable);
         }
     }

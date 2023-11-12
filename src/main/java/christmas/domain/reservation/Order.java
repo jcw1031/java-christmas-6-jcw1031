@@ -31,6 +31,10 @@ public class Order {
         return new OrderMenuDto(menu.getName(), quantity);
     }
 
+    public boolean isMenuTypeOf(MenuType menuType) {
+        return menu.getMenuType().equals(menuType);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
