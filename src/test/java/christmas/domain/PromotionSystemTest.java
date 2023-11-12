@@ -1,10 +1,10 @@
 package christmas.domain;
 
-import christmas.converter.MenuOrdersConverter;
+import christmas.converter.OrderMenusConverter;
 import christmas.domain.reservation.Order;
 import christmas.domain.reservation.Reservation;
-import christmas.dto.MenuOrderDto;
-import christmas.dto.MenuOrdersDto;
+import christmas.dto.OrderMenuDto;
+import christmas.dto.OrderMenusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +37,6 @@ class PromotionSystemTest {
         // then
         assertThat(reservation)
                 .extracting("visitDate")
-                .extracting("date")
                 .isEqualTo(LocalDate.of(2023, 12, visitDay));
     }
 
@@ -48,11 +47,11 @@ class PromotionSystemTest {
         // given
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
-        MenuOrdersDto menuOrdersDto = MenuOrdersConverter.convert(orderMenus);
-        List<MenuOrderDto> menuOrders = menuOrdersDto.menuOrders();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
 
         // when
-        promotionSystem.orderMenus(new MenuOrdersDto(menuOrders));
+        promotionSystem.orderMenus(new OrderMenusDto(menuOrders));
 
         List<Order> orders = menuOrders.stream()
                 .map(Order::from)

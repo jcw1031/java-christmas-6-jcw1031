@@ -1,8 +1,8 @@
 package christmas.domain.reservation;
 
-import christmas.converter.MenuOrdersConverter;
-import christmas.dto.MenuOrderDto;
-import christmas.dto.MenuOrdersDto;
+import christmas.converter.OrderMenusConverter;
+import christmas.dto.OrderMenuDto;
+import christmas.dto.OrderMenusDto;
 import christmas.exception.ErrorSubject;
 import christmas.exception.IllegalMenuOrderException;
 import org.junit.jupiter.api.DisplayName;
@@ -23,8 +23,8 @@ class OrdersTest {
         // given
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
-        MenuOrdersDto menuOrdersDto = MenuOrdersConverter.convert(orderMenus);
-        List<MenuOrderDto> menuOrders = menuOrdersDto.menuOrders();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
 
         //  when & then
         assertThatThrownBy(() -> Orders.from(menuOrders))
@@ -39,8 +39,8 @@ class OrdersTest {
         // given
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
-        MenuOrdersDto menuOrdersDto = MenuOrdersConverter.convert(orderMenus);
-        List<MenuOrderDto> menuOrders = menuOrdersDto.menuOrders();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
 
         //  when & then
         assertThatThrownBy(() -> Orders.from(menuOrders))

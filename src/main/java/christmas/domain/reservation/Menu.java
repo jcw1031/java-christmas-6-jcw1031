@@ -42,6 +42,10 @@ public enum Menu {
                 .findAny();
     }
 
+    public String getName() {
+        return name;
+    }
+
     private boolean isNameMatch(String name) {
         return this.name.equals(name);
     }

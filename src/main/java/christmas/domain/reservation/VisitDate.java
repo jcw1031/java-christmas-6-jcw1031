@@ -22,4 +22,8 @@ public class VisitDate {
         LocalDate date = LocalDate.of(Year.now().getValue(), Month.DECEMBER, day);
         return new VisitDate(date);
     }
+
+    public LocalDate date() {
+        return date;
+    }
 }

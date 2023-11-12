@@ -1,6 +1,7 @@
 package christmas.domain.reservation;
 
-import christmas.dto.MenuOrderDto;
+import christmas.dto.OrderMenuDto;
+import christmas.dto.OrderMenusDto;
 import christmas.validator.MenuOrderValidator;
 
 import java.util.List;
@@ -15,12 +16,16 @@ public class Orders {
         this.orders = orders;
     }
 
-    public static Orders from(List<MenuOrderDto> menuOrders) {
+    public static Orders from(List<OrderMenuDto> menuOrders) {
         List<Order> orders = menuOrders.stream()
                 .map(Order::from)
                 .toList();
         MenuOrderValidator.validateDuplicateMenu(orders);
         MenuOrderValidator.validateTotalQuantity(orders);
         return new Orders(orders);
+    }
+
+    public OrderMenusDto getOrderMenus() {
+        return OrderMenusDto.from(orders);
     }
 }

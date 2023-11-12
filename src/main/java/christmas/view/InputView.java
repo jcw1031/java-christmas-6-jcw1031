@@ -1,9 +1,9 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.converter.MenuOrdersConverter;
+import christmas.converter.OrderMenusConverter;
 import christmas.converter.NumberConverter;
-import christmas.dto.MenuOrdersDto;
+import christmas.dto.OrderMenusDto;
 import christmas.exception.ErrorSubject;
 
 import java.util.Arrays;
@@ -17,10 +17,10 @@ public class InputView {
         return NumberConverter.convert(input, ErrorSubject.DATE);
     }
 
-    public MenuOrdersDto inputOrderMenus() {
+    public OrderMenusDto inputOrderMenus() {
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         List<String> input = readInput(",");
-        return MenuOrdersConverter.convert(input);
+        return OrderMenusConverter.convert(input);
     }
 
     private String readInput() {

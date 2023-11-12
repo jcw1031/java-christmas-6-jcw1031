@@ -1,6 +1,6 @@
 package christmas.domain.reservation;
 
-import christmas.dto.MenuOrderDto;
+import christmas.dto.OrderMenuDto;
 import christmas.exception.IllegalMenuOrderException;
 
 public class Order {
@@ -15,7 +15,7 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public static Order from(MenuOrderDto menuOrder) {
+    public static Order from(OrderMenuDto menuOrder) {
         String name = menuOrder.name();
         int quantity = menuOrder.quantity();
         Menu menu = Menu.of(name)
@@ -25,6 +25,10 @@ public class Order {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public OrderMenuDto toDto() {
+        return new OrderMenuDto(menu.getName(), quantity);
     }
 
     @Override
