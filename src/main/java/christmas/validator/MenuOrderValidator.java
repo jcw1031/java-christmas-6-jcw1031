@@ -37,7 +37,7 @@ public class MenuOrderValidator {
                 .mapToInt(Order::getQuantity)
                 .sum();
         if (totalQuantity > Orders.MAXIMUM_TOTAL_QUANTITY) {
-            throw new IllegalMenuOrderException("**메뉴는 한 번에 최대 20개 까지만 주문할 수 있습니다!**");
+            throw new IllegalMenuOrderException("**메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다!**");
         }
     }
 
