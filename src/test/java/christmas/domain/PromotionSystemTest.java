@@ -37,6 +37,7 @@ class PromotionSystemTest {
         // then
         assertThat(reservation)
                 .extracting("visitDate")
+                .extracting("date")
                 .isEqualTo(LocalDate.of(2023, 12, visitDay));
     }
 
