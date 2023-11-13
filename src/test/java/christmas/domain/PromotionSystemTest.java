@@ -5,6 +5,7 @@ import christmas.domain.benefits.EventBenefits;
 import christmas.domain.reservation.Menu;
 import christmas.domain.reservation.Order;
 import christmas.domain.reservation.Reservation;
+import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenuDto;
 import christmas.dto.OrderMenusDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -116,5 +118,44 @@ class PromotionSystemTest {
 
         // then
         assertThat(totalOrderAmount).isEqualTo(expectedTotalOrderAmount);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 12만원 이상인 경우 증정 메뉴를 제공한다.")
+    @ValueSource(strings = {"타파스-2,해산물파스타-2,초코케이크-1,레드와인-2", "티본스테이크-3"})
+    @ParameterizedTest
+    void determineGiveawayMenu(String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+
+        // when
+        promotionSystem.orderMenus(orderMenusDto);
+        GiveawayMenuDto giveawayMenu = promotionSystem.determineGiveawayMenu()
+                .get();
+
+        // then
+        assertThat(giveawayMenu).isNotNull();
+        assertThat(giveawayMenu)
+                .extracting("name").isEqualTo(Menu.CHAMPAGNE.getName());
+        assertThat(giveawayMenu)
+                .extracting("quantity").isEqualTo(1);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 12만원 이하인 경우 증정 메뉴를 제공하지 않는다.")
+    @ValueSource(strings = {"타파스-1,시저샐러드-2", "티본스테이크-1"})
+    @ParameterizedTest
+    void determineGiveawayMenuNone(String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+
+        // when
+        promotionSystem.orderMenus(orderMenusDto);
+        Optional<GiveawayMenuDto> giveawayMenu = promotionSystem.determineGiveawayMenu();
+
+        // then
+        assertThat(giveawayMenu.isEmpty()).isTrue();
     }
 }
