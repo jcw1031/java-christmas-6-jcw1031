@@ -50,6 +50,10 @@ public enum Menu {
         return menuType;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
     private boolean isNameMatch(String name) {
         return this.name.equals(name);
     }

@@ -31,4 +31,8 @@ public class PromotionSystem {
     public OrderMenusDto generateOrderMenusHistory() {
         return reservation.generateOrderMenusHistory();
     }
+
+    public int getTotalOrderAmount() {
+        return reservation.getTotalOrderAmount();
+    }
 }

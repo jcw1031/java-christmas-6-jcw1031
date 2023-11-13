@@ -27,6 +27,10 @@ public class Order {
         return quantity;
     }
 
+    public int getOrderAmount() {
+        return quantity * menu.getPrice();
+    }
+
     public OrderMenuDto toDto() {
         return new OrderMenuDto(menu.getName(), quantity);
     }

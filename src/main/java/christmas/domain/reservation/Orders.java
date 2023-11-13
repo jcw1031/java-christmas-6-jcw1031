@@ -29,4 +29,10 @@ public class Orders {
     public OrderMenusDto getOrderMenus() {
         return OrderMenusDto.from(orders);
     }
+
+    public int getTotalOrderAmount() {
+        return orders.stream()
+                .mapToInt(Order::getOrderAmount)
+                .sum();
+    }
 }

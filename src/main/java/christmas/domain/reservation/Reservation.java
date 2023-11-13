@@ -25,4 +25,8 @@ public class Reservation {
     public OrderMenusDto generateOrderMenusHistory() {
         return orders.getOrderMenus();
     }
+
+    public int getTotalOrderAmount() {
+        return orders.getTotalOrderAmount();
+    }
 }

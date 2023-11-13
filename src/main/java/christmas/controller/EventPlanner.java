@@ -51,10 +51,16 @@ public class EventPlanner {
         outputView.printEventBenefitsMessage(visitDate.date());
 
         printOrderMenus();
+        printTotalOrderAmount();
     }
 
     private void printOrderMenus() {
         OrderMenusDto orderMenus = promotionSystem.generateOrderMenusHistory();
         outputView.printOrderMenus(orderMenus);
+    }
+
+    private void printTotalOrderAmount() {
+        int totalOrderAmount = promotionSystem.getTotalOrderAmount();
+        outputView.printTotalOrderAmount(totalOrderAmount);
     }
 }
