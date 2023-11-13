@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class OrdersTest {
@@ -24,10 +25,10 @@ class OrdersTest {
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
         OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
-        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
 
         //  when & then
-        assertThatThrownBy(() -> Orders.from(menuOrders))
+        assertThatThrownBy(() -> Orders.from(orderMenuDtoList))
                 .isInstanceOf(IllegalMenuOrderException.class)
                 .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
     }
@@ -40,10 +41,10 @@ class OrdersTest {
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
         OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
-        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
 
         //  when & then
-        assertThatThrownBy(() -> Orders.from(menuOrders))
+        assertThatThrownBy(() -> Orders.from(orderMenuDtoList))
                 .isInstanceOf(IllegalMenuOrderException.class)
                 .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
     }
@@ -56,11 +57,38 @@ class OrdersTest {
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
         OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
-        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
 
         //  when & then
-        assertThatThrownBy(() -> Orders.from(menuOrders))
+        assertThatThrownBy(() -> Orders.from(orderMenuDtoList))
                 .isInstanceOf(IllegalMenuOrderException.class)
                 .extracting("errorSubject").isEqualTo(ErrorSubject.ORDER);
+    }
+
+    @DisplayName("총 주문 금액을 계산한다.")
+    @ValueSource(strings = {"양송이수프-2", "티본스테이크-1,아이스크림-2", "타파스-2,해산물파스타-2,초코케이크-1,레드와인-2"})
+    @ParameterizedTest
+    void getTotalOrderAmount(String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
+        int expectedTotalOrderAmount = orderMenuDtoList
+                .stream()
+                .mapToInt(orderMenu -> {
+                    String name = orderMenu.name();
+                    int quantity = orderMenu.quantity();
+                    Menu menu = Menu.of(name).get();
+                    return menu.getPrice() * quantity;
+                })
+                .sum();
+
+        //  when
+        Orders orders = Orders.from(orderMenuDtoList);
+        int totalOrderAmount = orders.getTotalOrderAmount();
+
+        // then
+        assertThat(totalOrderAmount).isEqualTo(expectedTotalOrderAmount);
     }
 }

@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.converter.OrderMenusConverter;
+import christmas.domain.reservation.Menu;
 import christmas.domain.reservation.Order;
 import christmas.domain.reservation.Reservation;
 import christmas.dto.OrderMenuDto;
@@ -86,5 +87,31 @@ class PromotionSystemTest {
         assertThat(orderMenusHistory)
                 .extracting("orderMenus")
                 .isEqualTo(orderMenuDtoList);
+    }
+
+    @DisplayName("할인 전 총 주문 금액을 받아온다.")
+    @ValueSource(strings = {"양송이수프-2", "티본스테이크-1,아이스크림-2", "타파스-2,해산물파스타-2,초코케이크-1,레드와인-2"})
+    @ParameterizedTest
+    void getTotalOrderAmount(String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+        int expectedTotalOrderAmount = orderMenusDto.orderMenus()
+                .stream()
+                .mapToInt(orderMenu -> {
+                    String name = orderMenu.name();
+                    int quantity = orderMenu.quantity();
+                    Menu menu = Menu.of(name).get();
+                    return menu.getPrice() * quantity;
+                })
+                .sum();
+
+        // when
+        promotionSystem.orderMenus(orderMenusDto);
+        int totalOrderAmount = promotionSystem.getTotalOrderAmount();
+
+        // then
+        assertThat(totalOrderAmount).isEqualTo(expectedTotalOrderAmount);
     }
 }
