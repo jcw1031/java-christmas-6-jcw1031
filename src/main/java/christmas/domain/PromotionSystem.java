@@ -2,7 +2,9 @@ package christmas.domain;
 
 import christmas.domain.benefits.EventBenefits;
 import christmas.domain.benefits.Giveaway;
+import christmas.domain.benefits.discount.Discounts;
 import christmas.domain.reservation.Reservation;
+import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenuDto;
 import christmas.dto.OrderMenusDto;
@@ -45,5 +47,10 @@ public class PromotionSystem {
     public Optional<GiveawayMenuDto> determineGiveawayMenu() {
         Optional<Giveaway> giveawayMenu = eventBenefits.generateGiveawayMenu(reservation);
         return giveawayMenu.map(Giveaway::toDto);
+    }
+
+    public Optional<DiscountsDto> calculateDiscounts() {
+        Optional<Discounts> discounts = eventBenefits.generateDiscounts(reservation);
+        return discounts.map(Discounts::toDto);
     }
 }

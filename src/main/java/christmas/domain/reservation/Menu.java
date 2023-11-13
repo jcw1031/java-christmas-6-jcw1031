@@ -36,12 +36,6 @@ public enum Menu {
         this.price = price;
     }
 
-    public static Optional<Menu> of(String name) {
-        return Arrays.stream(Menu.values())
-                .filter(menu -> menu.isNameMatch(name))
-                .findAny();
-    }
-
     public String getName() {
         return name;
     }
@@ -54,7 +48,17 @@ public enum Menu {
         return price;
     }
 
+    public static Optional<Menu> of(String name) {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> menu.isNameMatch(name))
+                .findAny();
+    }
+
     private boolean isNameMatch(String name) {
         return this.name.equals(name);
+    }
+
+    public static Menu getGiveaway() {
+        return CHAMPAGNE;
     }
 }

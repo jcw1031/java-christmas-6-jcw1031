@@ -8,6 +8,7 @@ public class EventPlannerMessage {
     public static final String ORDER_MENU_TITLE = "<주문 메뉴>";
     public static final String TOTAL_ORDER_AMOUNT_TITLE = "<할인 전 총주문 금액>";
     public static final String GIVEAWAY_TITLE = "<증정 메뉴>";
+    public static final String DISCOUNTS_TITLE = "<혜택 내역>";
 
     public static final String NONE = "없음";
 }

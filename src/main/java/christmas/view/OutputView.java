@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenusDto;
 
@@ -38,6 +39,18 @@ public class OutputView {
     public void printGiveawayMenu(GiveawayMenuDto giveawayMenu) {
         String body = DisplayFormatter.displayGiveawayMenu(giveawayMenu);
         printTitleAndBody(EventPlannerMessage.GIVEAWAY_TITLE, body);
+    }
+
+    public void printDiscounts(DiscountsDto discountsDto) {
+        String body = discountsDto.discounts()
+                .stream()
+                .map(DisplayFormatter::displayDiscount)
+                .collect(Collectors.joining(System.lineSeparator()));
+        printTitleAndBody(EventPlannerMessage.DISCOUNTS_TITLE, body);
+    }
+
+    public void printDiscountsNone() {
+        printTitleAndBody(EventPlannerMessage.DISCOUNTS_TITLE, EventPlannerMessage.NONE);
     }
 
     private void printTitleAndBody(String title, String body) {

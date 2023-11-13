@@ -6,6 +6,7 @@ import christmas.dto.GiveawayMenuDto;
 public class Giveaway {
 
     public static final int GIVEAWAY_EVENT_APPLY_THRESHOLD = 120_000;
+    public static final int GIVEAWAY_MENUS_NUMBER = 1;
 
     private final Menu menu;
     private final int qunatity;
