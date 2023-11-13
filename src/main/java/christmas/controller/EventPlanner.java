@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.PromotionSystem;
+import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenusDto;
 import christmas.exception.IllegalReservationException;
 import christmas.exception.InputErrorMessages;
@@ -8,6 +9,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class EventPlanner {
 
@@ -53,6 +55,7 @@ public class EventPlanner {
 
         printOrderMenus();
         printTotalOrderAmount();
+        printGiveawayMenu();
     }
 
     private void printOrderMenus() {
@@ -63,5 +66,13 @@ public class EventPlanner {
     private void printTotalOrderAmount() {
         int totalOrderAmount = promotionSystem.getTotalOrderAmount();
         outputView.printTotalOrderAmount(totalOrderAmount);
+    }
+
+    private void printGiveawayMenu() {
+        Optional<GiveawayMenuDto> giveawayMenu = promotionSystem.determineGiveawayMenu();
+        giveawayMenu.ifPresentOrElse(
+                outputView::printGiveawayMenu,
+                outputView::printGiveawayMenuNone
+        );
     }
 }

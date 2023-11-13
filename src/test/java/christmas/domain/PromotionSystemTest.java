@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.converter.OrderMenusConverter;
+import christmas.domain.benefits.EventBenefits;
 import christmas.domain.reservation.Menu;
 import christmas.domain.reservation.Order;
 import christmas.domain.reservation.Reservation;
@@ -21,11 +22,13 @@ class PromotionSystemTest {
 
     PromotionSystem promotionSystem;
     Reservation reservation;
+    EventBenefits eventBenefits;
 
     @BeforeEach
     void setUp() {
         reservation = new Reservation();
-        promotionSystem = new PromotionSystem(reservation);
+        eventBenefits = new EventBenefits();
+        promotionSystem = new PromotionSystem(reservation, eventBenefits);
     }
 
     @DisplayName("방문 날짜(일)를 지정한다.")
@@ -66,7 +69,7 @@ class PromotionSystemTest {
                 .extracting("orders")
                 .isNotNull()
                 .asList()
-                .contains(orders.toArray());
+                .isEqualTo(orders);
     }
 
     @DisplayName("주문 메뉴 내역을 생성한다.")

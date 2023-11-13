@@ -1,18 +1,24 @@
 package christmas.domain;
 
+import christmas.domain.benefits.EventBenefits;
+import christmas.domain.benefits.Giveaway;
 import christmas.domain.reservation.Reservation;
+import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenuDto;
 import christmas.dto.OrderMenusDto;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class PromotionSystem {
 
     private final Reservation reservation;
+    private final EventBenefits eventBenefits;
 
-    public PromotionSystem(Reservation reservation) {
+    public PromotionSystem(Reservation reservation, EventBenefits eventBenefits) {
         this.reservation = reservation;
+        this.eventBenefits = eventBenefits;
     }
 
     public void reserveVisitDate(int reservationDay) {
@@ -34,5 +40,10 @@ public class PromotionSystem {
 
     public int getTotalOrderAmount() {
         return reservation.getTotalOrderAmount();
+    }
+
+    public Optional<GiveawayMenuDto> determineGiveawayMenu() {
+        Optional<Giveaway> giveawayMenu = eventBenefits.generateGiveawayMenu(reservation);
+        return giveawayMenu.map(Giveaway::toDto);
     }
 }
