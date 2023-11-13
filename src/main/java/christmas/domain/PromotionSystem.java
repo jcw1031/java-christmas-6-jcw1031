@@ -1,10 +1,10 @@
 package christmas.domain;
 
 import christmas.domain.reservation.Reservation;
-import christmas.domain.reservation.VisitDate;
 import christmas.dto.OrderMenuDto;
 import christmas.dto.OrderMenusDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class PromotionSystem {
@@ -20,12 +20,12 @@ public class PromotionSystem {
     }
 
     public void orderMenus(OrderMenusDto orderMenusDto) {
-        List<OrderMenuDto> menuOrders = orderMenusDto.orderMenus();
-        reservation.generateOrders(menuOrders);
+        List<OrderMenuDto> orderMenus = orderMenusDto.orderMenus();
+        reservation.generateOrders(orderMenus);
     }
 
-    public VisitDate getVisitDate() {
-        return reservation.getVisitDate();
+    public LocalDate getVisitDate() {
+        return reservation.getDate();
     }
 
     public OrderMenusDto generateOrderMenusHistory() {

@@ -27,7 +27,7 @@ public class Order {
         return quantity;
     }
 
-    public int getOrderAmount() {
+    public int getAmount() {
         return quantity * menu.getPrice();
     }
 

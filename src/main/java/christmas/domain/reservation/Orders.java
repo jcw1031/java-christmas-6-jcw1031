@@ -27,12 +27,15 @@ public class Orders {
     }
 
     public OrderMenusDto getOrderMenus() {
-        return OrderMenusDto.from(orders);
+        List<OrderMenuDto> orderMenus = orders.stream()
+                .map(Order::toDto)
+                .toList();
+        return new OrderMenusDto(orderMenus);
     }
 
-    public int getTotalOrderAmount() {
+    public int getTotalAmount() {
         return orders.stream()
-                .mapToInt(Order::getOrderAmount)
+                .mapToInt(Order::getAmount)
                 .sum();
     }
 }

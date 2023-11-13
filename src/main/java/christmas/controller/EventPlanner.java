@@ -1,12 +1,13 @@
 package christmas.controller;
 
 import christmas.domain.PromotionSystem;
-import christmas.domain.reservation.VisitDate;
 import christmas.dto.OrderMenusDto;
 import christmas.exception.IllegalReservationException;
 import christmas.exception.InputErrorMessages;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+
+import java.time.LocalDate;
 
 public class EventPlanner {
 
@@ -47,8 +48,8 @@ public class EventPlanner {
     }
 
     private void printEventBenefits() {
-        VisitDate visitDate = promotionSystem.getVisitDate();
-        outputView.printEventBenefitsMessage(visitDate.date());
+        LocalDate visitDate = promotionSystem.getVisitDate();
+        outputView.printEventBenefitsMessage(visitDate);
 
         printOrderMenus();
         printTotalOrderAmount();

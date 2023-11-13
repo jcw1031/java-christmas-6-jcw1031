@@ -68,7 +68,7 @@ class OrdersTest {
     @DisplayName("총 주문 금액을 계산한다.")
     @ValueSource(strings = {"양송이수프-2", "티본스테이크-1,아이스크림-2", "타파스-2,해산물파스타-2,초코케이크-1,레드와인-2"})
     @ParameterizedTest
-    void getTotalOrderAmount(String orderMenusInput) {
+    void getTotalAmount(String orderMenusInput) {
         // given
         List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
                 .toList();
@@ -86,7 +86,7 @@ class OrdersTest {
 
         //  when
         Orders orders = Orders.from(orderMenuDtoList);
-        int totalOrderAmount = orders.getTotalOrderAmount();
+        int totalOrderAmount = orders.getTotalAmount();
 
         // then
         assertThat(totalOrderAmount).isEqualTo(expectedTotalOrderAmount);

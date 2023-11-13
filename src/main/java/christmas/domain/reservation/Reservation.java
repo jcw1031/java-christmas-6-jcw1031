@@ -3,6 +3,7 @@ package christmas.domain.reservation;
 import christmas.dto.OrderMenuDto;
 import christmas.dto.OrderMenusDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Reservation {
@@ -18,8 +19,8 @@ public class Reservation {
         orders = Orders.from(menuOrders);
     }
 
-    public VisitDate getVisitDate() {
-        return visitDate;
+    public LocalDate getDate() {
+        return visitDate.date();
     }
 
     public OrderMenusDto generateOrderMenusHistory() {
@@ -27,6 +28,6 @@ public class Reservation {
     }
 
     public int getTotalOrderAmount() {
-        return orders.getTotalOrderAmount();
+        return orders.getTotalAmount();
     }
 }
