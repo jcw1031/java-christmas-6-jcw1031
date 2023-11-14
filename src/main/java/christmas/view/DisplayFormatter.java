@@ -35,4 +35,8 @@ public class DisplayFormatter {
         DiscountType discountType = discountDto.discountType();
         return String.format(DISCOUNT_DISPLAY_FORMAT, discountType.getDiscountName(), discountDto.discountAmount());
     }
+
+    public static String displayBenefitsAmount(int totalBenefitsAmount) {
+        return String.format(PRICE_DISPLAY_FORMAT, totalBenefitsAmount);
+    }
 }

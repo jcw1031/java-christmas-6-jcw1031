@@ -16,7 +16,15 @@ public class Discount {
         return new Discount(discountType, -discountAmount);
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
     public DiscountDto toDto() {
         return new DiscountDto(type, amount);
+    }
+
+    public boolean isTypeOf(DiscountType discountType) {
+        return this.type.equals(discountType);
     }
 }

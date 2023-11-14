@@ -31,4 +31,11 @@ public class EventBenefits {
         }
         return Optional.ofNullable(discounts);
     }
+
+    public int getTotalAmount() {
+        List<Discount> discounts = this.discounts.getDiscounts();
+        return discounts.stream()
+                .mapToInt(Discount::getAmount)
+                .sum();
+    }
 }

@@ -19,4 +19,8 @@ public class Discounts {
                 .toList();
         return new DiscountsDto(discountDtoList);
     }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
 }
