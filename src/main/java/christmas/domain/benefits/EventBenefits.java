@@ -50,7 +50,7 @@ public class EventBenefits {
                 .sum();
     }
 
-    public Optional<Badge> generateBadge(Reservation reservation) {
+    public Optional<Badge> generateBadge() {
         int totalBenefitsAmount = getTotalAmount();
         return Badge.of(totalBenefitsAmount);
     }

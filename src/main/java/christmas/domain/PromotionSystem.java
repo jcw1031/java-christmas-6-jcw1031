@@ -71,7 +71,7 @@ public class PromotionSystem {
     }
 
     public Optional<BadgeDto> getEventBadge() {
-        Optional<Badge> badge = eventBenefits.generateBadge(reservation);
+        Optional<Badge> badge = eventBenefits.generateBadge();
         return badge.map(Badge::toDto);
     }
 }
