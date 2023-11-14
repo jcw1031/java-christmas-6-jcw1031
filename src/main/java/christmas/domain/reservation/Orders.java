@@ -40,8 +40,9 @@ public class Orders {
     }
 
     public int getMenusCountTypeOf(MenuType menuType) {
-        return (int) orders.stream()
+        return orders.stream()
                 .filter(order -> order.isMenuTypeOf(menuType))
-                .count();
+                .mapToInt(Order::getQuantity)
+                .sum();
     }
 }
