@@ -3,10 +3,10 @@ package christmas.domain.benefits.discount.policy;
 import christmas.domain.benefits.discount.Discount;
 import christmas.domain.benefits.discount.DiscountType;
 import christmas.domain.reservation.Reservation;
+import christmas.domain.reservation.VisitDate;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Period;
 import java.time.Year;
 import java.util.Optional;
 
@@ -19,13 +19,12 @@ public class DDayDiscountPolicy implements DiscountPolicy {
 
     @Override
     public Optional<Discount> calculateDiscountAmount(Reservation reservation) {
-        LocalDate visitDate = reservation.getDate();
+        VisitDate visitDate = reservation.getVisitDate();
         if (visitDate.isAfter(CHRISTMAS)) {
             return Optional.empty();
         }
 
-        Period period = Period.between(START_DATE, visitDate);
-        int dDay = period.getDays();
+        int dDay = visitDate.betweenDays(START_DATE);
         int discountAmount = START_DISCOUNT_AMOUNT + dDay * INCREASE_AMOUNT;
         Discount discount = Discount.of(DiscountType.CHRISTMAS_D_DAY, discountAmount);
         return Optional.of(discount);

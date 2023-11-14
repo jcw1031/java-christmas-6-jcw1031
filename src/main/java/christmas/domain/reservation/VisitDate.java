@@ -2,8 +2,10 @@ package christmas.domain.reservation;
 
 import christmas.validator.VisitDateValidator;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Period;
 import java.time.Year;
 
 public class VisitDate {
@@ -25,5 +27,19 @@ public class VisitDate {
 
     public LocalDate date() {
         return date;
+    }
+
+    public boolean isAfter(LocalDate date) {
+        return this.date.isAfter(date);
+    }
+
+    public int betweenDays(LocalDate date) {
+        Period period = Period.between(date, this.date);
+        return period.getDays();
+    }
+
+    public boolean isWeekend() {
+        return date.getDayOfWeek().equals(DayOfWeek.FRIDAY)
+                || date.getDayOfWeek().equals(DayOfWeek.SATURDAY);
     }
 }

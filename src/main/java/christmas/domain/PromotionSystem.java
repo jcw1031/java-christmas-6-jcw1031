@@ -4,6 +4,7 @@ import christmas.domain.benefits.EventBenefits;
 import christmas.domain.benefits.Giveaway;
 import christmas.domain.benefits.discount.Discounts;
 import christmas.domain.reservation.Reservation;
+import christmas.domain.reservation.VisitDate;
 import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenuDto;
@@ -33,7 +34,8 @@ public class PromotionSystem {
     }
 
     public LocalDate getVisitDate() {
-        return reservation.getDate();
+        VisitDate visitDate = reservation.getVisitDate();
+        return visitDate.date();
     }
 
     public OrderMenusDto generateOrderMenusHistory() {
