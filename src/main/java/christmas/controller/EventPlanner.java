@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.PromotionSystem;
 import christmas.dto.BadgeDto;
+import christmas.dto.DiscountDto;
 import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenusDto;
@@ -11,6 +12,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class EventPlanner {
@@ -83,11 +85,14 @@ public class EventPlanner {
     }
 
     private void printDiscounts() {
-        Optional<DiscountsDto> discounts = promotionSystem.calculateDiscounts();
-        discounts.ifPresentOrElse(
-                outputView::printDiscounts,
-                outputView::printDiscountsNone
-        );
+        DiscountsDto discounts = promotionSystem.calculateDiscounts();
+        List<DiscountDto> discountsResult = discounts.discounts();
+        if (discountsResult.isEmpty()) {
+            outputView.printDiscountsNone();
+            return;
+        }
+
+        outputView.printDiscounts(discounts);
     }
 
     private void printTotalBenefitsAmount() {

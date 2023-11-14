@@ -177,10 +177,10 @@ class PromotionSystemTest {
         // when
         promotionSystem.reserveVisitDate(visitDay);
         promotionSystem.orderMenus(orderMenusDto);
-        Optional<DiscountsDto> discounts = promotionSystem.calculateDiscounts();
+        DiscountsDto discounts = promotionSystem.calculateDiscounts();
 
         // then
-        assertThat(discounts).isNotEmpty();
+        assertThat(discounts.discounts()).isNotEmpty();
     }
 
     @DisplayName("주문 금액이 10,000원 미만인 경우 할인이 적용되지 않는다.")
@@ -198,9 +198,9 @@ class PromotionSystemTest {
         // when
         promotionSystem.reserveVisitDate(visitDay);
         promotionSystem.orderMenus(orderMenusDto);
-        Optional<DiscountsDto> discounts = promotionSystem.calculateDiscounts();
+        DiscountsDto discounts = promotionSystem.calculateDiscounts();
 
         // then
-        assertThat(discounts).isEmpty();
+        assertThat(discounts.discounts()).isEmpty();
     }
 }

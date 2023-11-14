@@ -27,12 +27,10 @@ public class EventBenefits {
         return Optional.ofNullable(giveaway);
     }
 
-    public Optional<Discounts> generateDiscounts(Reservation reservation) {
+    public Discounts generateDiscounts(Reservation reservation) {
         List<Discount> discountsResult = discountPolicies.calculateDiscounts(reservation);
-        if (!discountsResult.isEmpty()) {
-            discounts = new Discounts(discountsResult);
-        }
-        return Optional.ofNullable(discounts);
+        discounts = new Discounts(discountsResult);
+        return discounts;
     }
 
     public int getTotalAmount() {

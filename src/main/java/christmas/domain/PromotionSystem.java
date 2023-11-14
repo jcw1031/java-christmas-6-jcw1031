@@ -54,9 +54,9 @@ public class PromotionSystem {
         return giveawayMenu.map(Giveaway::toDto);
     }
 
-    public Optional<DiscountsDto> calculateDiscounts() {
-        Optional<Discounts> discounts = eventBenefits.generateDiscounts(reservation);
-        return discounts.map(Discounts::toDto);
+    public DiscountsDto calculateDiscounts() {
+        Discounts discounts = eventBenefits.generateDiscounts(reservation);
+        return discounts.toDto();
     }
 
     public int getTotalBenefitsAmount() {
