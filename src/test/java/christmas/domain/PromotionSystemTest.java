@@ -186,7 +186,7 @@ class PromotionSystemTest {
     @DisplayName("주문 금액이 10,000원 미만인 경우 할인이 적용되지 않는다.")
     @CsvSource(textBlock = """
             1, '타파스-1'
-            10, '아이스크림-1',
+            10, '아이스크림-1'
              """)
     @ParameterizedTest
     void calculateDiscountsNone(int visitDay, String orderMenusInput) {
