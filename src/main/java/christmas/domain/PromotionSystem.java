@@ -63,6 +63,8 @@ public class PromotionSystem {
 
     public int getPaymentAmountAfterDiscount() {
         Orders orders = reservation.getOrders();
-        return eventBenefits.getCalculatedPaymentAmount(orders);
+        int orderAmount = orders.getTotalAmount();
+        int discountAmount = eventBenefits.getDiscountAmount();
+        return orderAmount + discountAmount;
     }
 }

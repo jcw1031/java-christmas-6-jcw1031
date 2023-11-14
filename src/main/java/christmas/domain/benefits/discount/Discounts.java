@@ -23,4 +23,10 @@ public class Discounts {
     public List<Discount> getDiscounts() {
         return discounts;
     }
+
+    public List<Discount> getDiscountsTypeOf(DiscountType discountType) {
+        return discounts.stream()
+                .filter(discount -> discount.isTypeOf(discountType))
+                .toList();
+    }
 }

@@ -5,7 +5,6 @@ import christmas.domain.benefits.discount.DiscountType;
 import christmas.domain.benefits.discount.Discounts;
 import christmas.domain.benefits.discount.policy.DiscountPolicies;
 import christmas.domain.reservation.Menu;
-import christmas.domain.reservation.Orders;
 import christmas.domain.reservation.Reservation;
 
 import java.util.List;
@@ -41,13 +40,11 @@ public class EventBenefits {
                 .sum();
     }
 
-    public int getCalculatedPaymentAmount(Orders orders) {
-        int totalPaymentAmount = orders.getTotalAmount();
+    public int getDiscountAmount() {
         List<Discount> discounts = this.discounts.getDiscounts();
-        int discountAmount = discounts.stream()
+        return discounts.stream()
                 .filter(discount -> !discount.isTypeOf(DiscountType.GIVEAWAY))
                 .mapToInt(Discount::getAmount)
                 .sum();
-        return totalPaymentAmount + discountAmount;
     }
 }
