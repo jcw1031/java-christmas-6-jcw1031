@@ -5,12 +5,14 @@ import christmas.domain.benefits.EventBenefits;
 import christmas.domain.reservation.Menu;
 import christmas.domain.reservation.Order;
 import christmas.domain.reservation.Reservation;
+import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenuDto;
 import christmas.dto.OrderMenusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
@@ -121,7 +123,7 @@ class PromotionSystemTest {
     }
 
     @DisplayName("할인 전 총 주문 금액이 12만원 이상인 경우 증정 메뉴를 제공한다.")
-    @ValueSource(strings = {"타파스-2,해산물파스타-2,초코케이크-1,레드와인-2", "티본스테이크-3"})
+    @ValueSource(strings = {"타파스-2,해산물파스타-2,초코케이크-1,레드와인-2", "티본스테이크-3", "초코케이크-8"})
     @ParameterizedTest
     void determineGiveawayMenu(String orderMenusInput) {
         // given
@@ -142,7 +144,7 @@ class PromotionSystemTest {
                 .extracting("quantity").isEqualTo(1);
     }
 
-    @DisplayName("할인 전 총 주문 금액이 12만원 이하인 경우 증정 메뉴를 제공하지 않는다.")
+    @DisplayName("할인 전 총 주문 금액이 12만원 미만인 경우 증정 메뉴를 제공하지 않는다.")
     @ValueSource(strings = {"타파스-1,시저샐러드-2", "티본스테이크-1"})
     @ParameterizedTest
     void determineGiveawayMenuNone(String orderMenusInput) {
@@ -157,5 +159,48 @@ class PromotionSystemTest {
 
         // then
         assertThat(giveawayMenu.isEmpty()).isTrue();
+    }
+
+    @DisplayName("할인을 적용한다.")
+    @CsvSource(textBlock = """
+            1, '타파스-1,시저샐러드-2'
+            10, '티본스테이크-1,레드와인-2',
+            24, '아이스크림-2'
+             """)
+    @ParameterizedTest
+    void calculateDiscounts(int visitDay, String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+
+        // when
+        promotionSystem.reserveVisitDate(visitDay);
+        promotionSystem.orderMenus(orderMenusDto);
+        Optional<DiscountsDto> discounts = promotionSystem.calculateDiscounts();
+
+        // then
+        assertThat(discounts).isNotEmpty();
+    }
+
+    @DisplayName("주문 금액이 10,000원 미만인 경우 할인이 적용되지 않는다.")
+    @CsvSource(textBlock = """
+            1, '타파스-1'
+            10, '아이스크림-1',
+             """)
+    @ParameterizedTest
+    void calculateDiscountsNone(int visitDay, String orderMenusInput) {
+        // given
+        List<String> orderMenus = Arrays.stream(orderMenusInput.split(","))
+                .toList();
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(orderMenus);
+
+        // when
+        promotionSystem.reserveVisitDate(visitDay);
+        promotionSystem.orderMenus(orderMenusDto);
+        Optional<DiscountsDto> discounts = promotionSystem.calculateDiscounts();
+
+        // then
+        assertThat(discounts).isEmpty();
     }
 }
