@@ -164,7 +164,7 @@ class PromotionSystemTest {
     @DisplayName("할인을 적용한다.")
     @CsvSource(textBlock = """
             1, '타파스-1,시저샐러드-2'
-            10, '티본스테이크-1,레드와인-2',
+            10, '티본스테이크-1,레드와인-2'
             24, '아이스크림-2'
              """)
     @ParameterizedTest

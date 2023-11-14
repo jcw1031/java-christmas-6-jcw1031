@@ -2,6 +2,7 @@ package christmas.domain.benefits.discount;
 
 import christmas.converter.OrderMenusConverter;
 import christmas.domain.benefits.discount.policy.DDayDiscountPolicy;
+import christmas.domain.benefits.discount.policy.GiveawayDiscountPolicy;
 import christmas.domain.benefits.discount.policy.SpecialDiscountPolicy;
 import christmas.domain.benefits.discount.policy.WeekDiscountPolicy;
 import christmas.domain.reservation.Reservation;
@@ -24,6 +25,7 @@ class DiscountPolicyTest {
     DDayDiscountPolicy dDayDiscountPolicy = new DDayDiscountPolicy();
     WeekDiscountPolicy weekDiscountPolicy = new WeekDiscountPolicy();
     SpecialDiscountPolicy specialDiscountPolicy = new SpecialDiscountPolicy();
+    GiveawayDiscountPolicy giveawayDiscountPolicy = new GiveawayDiscountPolicy();
     Reservation reservation;
 
     @BeforeEach
@@ -173,6 +175,52 @@ class DiscountPolicyTest {
         reservation.generateOrders(orderMenuDtoList);
 
         Optional<Discount> discount = specialDiscountPolicy.calculateDiscountAmount(reservation);
+
+        // then
+        assertThat(discount).isEmpty();
+    }
+
+    @DisplayName("증정 혜택을 계산한다.")
+    @CsvSource(textBlock = """
+            1, 티본스테이크-3
+            20, 바비큐립-3
+            """)
+    @ParameterizedTest
+    void giveawayDiscount(int visitDay, String orderMenusInput) {
+        // given
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(List.of(orderMenusInput));
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
+
+        // when
+        reservation.generateVisitDate(visitDay);
+        reservation.generateOrders(orderMenuDtoList);
+
+        Optional<Discount> discount = giveawayDiscountPolicy.calculateDiscountAmount(reservation);
+
+        // then
+        assertThat(discount).isNotEmpty();
+        assertThat(discount).get()
+                .extracting("type").isEqualTo(DiscountType.GIVEAWAY);
+        assertThat(discount).get()
+                .extracting("amount").isEqualTo(-25_000);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 120,000원 이상이 아닌 경우 증정 혜택이 적용되지 않는다.")
+    @CsvSource(textBlock = """
+            1, 티본스테이크-1
+            20, 바비큐립-1
+            """)
+    @ParameterizedTest
+    void giveawayDiscountNone(int visitDay, String orderMenusInput) {
+        // given
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(List.of(orderMenusInput));
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
+
+        // when
+        reservation.generateVisitDate(visitDay);
+        reservation.generateOrders(orderMenuDtoList);
+
+        Optional<Discount> discount = giveawayDiscountPolicy.calculateDiscountAmount(reservation);
 
         // then
         assertThat(discount).isEmpty();
