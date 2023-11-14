@@ -1,11 +1,13 @@
 package christmas.domain;
 
+import christmas.domain.benefits.Badge;
 import christmas.domain.benefits.EventBenefits;
 import christmas.domain.benefits.Giveaway;
 import christmas.domain.benefits.discount.Discounts;
 import christmas.domain.reservation.Orders;
 import christmas.domain.reservation.Reservation;
 import christmas.domain.reservation.VisitDate;
+import christmas.dto.BadgeDto;
 import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenuDto;
@@ -66,5 +68,10 @@ public class PromotionSystem {
         int orderAmount = orders.getTotalAmount();
         int discountAmount = eventBenefits.getDiscountAmount();
         return orderAmount + discountAmount;
+    }
+
+    public Optional<BadgeDto> getEventBadge() {
+        Optional<Badge> badge = eventBenefits.generateBadge(reservation);
+        return badge.map(Badge::toDto);
     }
 }

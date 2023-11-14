@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public class EventBenefits {
 
+    public static final int EVENT_BENEFITS_APPLY_THRESHOLD = 10_000;
+
     private final DiscountPolicies discountPolicies = new DiscountPolicies();
 
     private Giveaway giveaway;
@@ -46,5 +48,10 @@ public class EventBenefits {
                 .filter(discount -> !discount.isTypeOf(DiscountType.GIVEAWAY))
                 .mapToInt(Discount::getAmount)
                 .sum();
+    }
+
+    public Optional<Badge> generateBadge(Reservation reservation) {
+        int totalBenefitsAmount = getTotalAmount();
+        return Badge.of(totalBenefitsAmount);
     }
 }

@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.PromotionSystem;
+import christmas.dto.BadgeDto;
 import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenusDto;
@@ -60,6 +61,7 @@ public class EventPlanner {
         printDiscounts();
         printTotalBenefitsAmount();
         printPaymentAmountAfterDiscount();
+        printEventBadge();
     }
 
     private void printOrderMenus() {
@@ -96,5 +98,13 @@ public class EventPlanner {
     private void printPaymentAmountAfterDiscount() {
         int paymentAmountAfterDiscount = promotionSystem.getPaymentAmountAfterDiscount();
         outputView.printPaymentDiscountAfterDiscount(paymentAmountAfterDiscount);
+    }
+
+    private void printEventBadge() {
+        Optional<BadgeDto> eventBadge = promotionSystem.getEventBadge();
+        eventBadge.ifPresentOrElse(
+                outputView::printBadge,
+                outputView::printBadgeNone
+        );
     }
 }

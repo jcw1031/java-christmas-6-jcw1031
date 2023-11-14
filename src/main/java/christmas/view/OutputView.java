@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.dto.BadgeDto;
 import christmas.dto.DiscountsDto;
 import christmas.dto.GiveawayMenuDto;
 import christmas.dto.OrderMenusDto;
@@ -33,7 +34,7 @@ public class OutputView {
     }
 
     public void printGiveawayMenuNone() {
-        printTitleAndBody(EventPlannerMessage.GIVEAWAY_TITLE, EventPlannerMessage.NONE);
+        printNone(EventPlannerMessage.GIVEAWAY_TITLE);
     }
 
     public void printGiveawayMenu(GiveawayMenuDto giveawayMenu) {
@@ -50,7 +51,7 @@ public class OutputView {
     }
 
     public void printDiscountsNone() {
-        printTitleAndBody(EventPlannerMessage.DISCOUNTS_TITLE, EventPlannerMessage.NONE);
+        printNone(EventPlannerMessage.DISCOUNTS_TITLE);
     }
 
     public void printTotalBenefitsAmount(int totalBenefitsAmount) {
@@ -61,6 +62,19 @@ public class OutputView {
     public void printPaymentDiscountAfterDiscount(int paymentAmountAfterDiscount) {
         String body = DisplayFormatter.displayPaymentAmount(paymentAmountAfterDiscount);
         printTitleAndBody(EventPlannerMessage.PAYMENT_AMOUNT_AFTER_DISCOUNT_MESSAGE, body);
+    }
+
+    public void printBadge(BadgeDto badgeDto) {
+        String body = badgeDto.badgeName();
+        printTitleAndBody(EventPlannerMessage.DECEMBER_EVENT_BADGE_MESSAGE, body);
+    }
+
+    public void printBadgeNone() {
+        printNone(EventPlannerMessage.DECEMBER_EVENT_BADGE_MESSAGE);
+    }
+
+    private void printNone(String title) {
+        printTitleAndBody(title, EventPlannerMessage.NONE);
     }
 
     private void printTitleAndBody(String title, String body) {

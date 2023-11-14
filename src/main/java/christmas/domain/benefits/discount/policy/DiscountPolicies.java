@@ -1,5 +1,6 @@
 package christmas.domain.benefits.discount.policy;
 
+import christmas.domain.benefits.EventBenefits;
 import christmas.domain.benefits.discount.Discount;
 import christmas.domain.reservation.Reservation;
 
@@ -9,8 +10,6 @@ import java.util.Optional;
 
 public class DiscountPolicies {
 
-    private static final int EVENT_BENEFITS_APPLY_THRESHOLD = 10_000;
-
     private final List<DiscountPolicy> discountPolies = List.of(
             new DDayDiscountPolicy(),
             new WeekDiscountPolicy(),
@@ -19,7 +18,7 @@ public class DiscountPolicies {
     );
 
     public List<Discount> calculateDiscounts(Reservation reservation) {
-        if (reservation.getTotalOrderAmount() < EVENT_BENEFITS_APPLY_THRESHOLD) {
+        if (reservation.getTotalOrderAmount() < EventBenefits.EVENT_BENEFITS_APPLY_THRESHOLD) {
             return Collections.emptyList();
         }
 
