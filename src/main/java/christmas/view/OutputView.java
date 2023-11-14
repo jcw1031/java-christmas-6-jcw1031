@@ -58,6 +58,11 @@ public class OutputView {
         printTitleAndBody(EventPlannerMessage.TOTAL_BENEFITS_AMOUNT_MESSAGE, body);
     }
 
+    public void printPaymentDiscountAfterDiscount(int paymentAmountAfterDiscount) {
+        String body = DisplayFormatter.displayPaymentAmount(paymentAmountAfterDiscount);
+        printTitleAndBody(EventPlannerMessage.PAYMENT_AMOUNT_AFTER_DISCOUNT_MESSAGE, body);
+    }
+
     private void printTitleAndBody(String title, String body) {
         printLineSeparator();
         System.out.println(title);

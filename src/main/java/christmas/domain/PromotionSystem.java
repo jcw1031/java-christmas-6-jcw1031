@@ -3,6 +3,7 @@ package christmas.domain;
 import christmas.domain.benefits.EventBenefits;
 import christmas.domain.benefits.Giveaway;
 import christmas.domain.benefits.discount.Discounts;
+import christmas.domain.reservation.Orders;
 import christmas.domain.reservation.Reservation;
 import christmas.domain.reservation.VisitDate;
 import christmas.dto.DiscountsDto;
@@ -58,5 +59,10 @@ public class PromotionSystem {
 
     public int getTotalBenefitsAmount() {
         return eventBenefits.getTotalAmount();
+    }
+
+    public int getPaymentAmountAfterDiscount() {
+        Orders orders = reservation.getOrders();
+        return eventBenefits.getCalculatedPaymentAmount(orders);
     }
 }

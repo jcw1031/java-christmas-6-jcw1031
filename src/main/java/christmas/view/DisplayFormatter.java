@@ -39,4 +39,8 @@ public class DisplayFormatter {
     public static String displayBenefitsAmount(int totalBenefitsAmount) {
         return String.format(PRICE_DISPLAY_FORMAT, totalBenefitsAmount);
     }
+
+    public static String displayPaymentAmount(int paymentAmountAfterDiscount) {
+        return String.format(PRICE_DISPLAY_FORMAT, paymentAmountAfterDiscount);
+    }
 }

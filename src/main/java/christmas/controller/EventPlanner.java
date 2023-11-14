@@ -59,6 +59,7 @@ public class EventPlanner {
         printGiveawayMenu();
         printDiscounts();
         printTotalBenefitsAmount();
+        printPaymentAmountAfterDiscount();
     }
 
     private void printOrderMenus() {
@@ -90,5 +91,10 @@ public class EventPlanner {
     private void printTotalBenefitsAmount() {
         int totalBenefitsAmount = promotionSystem.getTotalBenefitsAmount();
         outputView.printTotalBenefitsAmount(totalBenefitsAmount);
+    }
+
+    private void printPaymentAmountAfterDiscount() {
+        int paymentAmountAfterDiscount = promotionSystem.getPaymentAmountAfterDiscount();
+        outputView.printPaymentDiscountAfterDiscount(paymentAmountAfterDiscount);
     }
 }
