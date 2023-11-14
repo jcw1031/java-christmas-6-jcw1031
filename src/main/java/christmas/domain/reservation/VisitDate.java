@@ -39,7 +39,14 @@ public class VisitDate {
     }
 
     public boolean isWeekend() {
-        return date.getDayOfWeek().equals(DayOfWeek.FRIDAY)
-                || date.getDayOfWeek().equals(DayOfWeek.SATURDAY);
+        return isDayOfWeek(DayOfWeek.FRIDAY) || isDayOfWeek(DayOfWeek.SATURDAY);
+    }
+
+    public boolean isDayOfWeek(DayOfWeek dayOfWeek) {
+        return date.getDayOfWeek().equals(dayOfWeek);
+    }
+
+    public boolean isSame(LocalDate christmas) {
+        return date.isEqual(christmas);
     }
 }
