@@ -2,6 +2,7 @@ package christmas.domain.benefits.discount;
 
 import christmas.converter.OrderMenusConverter;
 import christmas.domain.benefits.discount.policy.DDayDiscountPolicy;
+import christmas.domain.benefits.discount.policy.SpecialDiscountPolicy;
 import christmas.domain.benefits.discount.policy.WeekDiscountPolicy;
 import christmas.domain.reservation.Reservation;
 import christmas.dto.OrderMenuDto;
@@ -22,6 +23,7 @@ class DiscountPolicyTest {
 
     DDayDiscountPolicy dDayDiscountPolicy = new DDayDiscountPolicy();
     WeekDiscountPolicy weekDiscountPolicy = new WeekDiscountPolicy();
+    SpecialDiscountPolicy specialDiscountPolicy = new SpecialDiscountPolicy();
     Reservation reservation;
 
     @BeforeEach
@@ -123,6 +125,54 @@ class DiscountPolicyTest {
         reservation.generateOrders(orderMenuDtoList);
 
         Optional<Discount> discount = weekDiscountPolicy.calculateDiscountAmount(reservation);
+
+        // then
+        assertThat(discount).isEmpty();
+    }
+
+    @DisplayName("특별 할인을 계산한다.")
+    @CsvSource(textBlock = """
+            3, 티본스테이크-1
+            10, 티본스테이크-1
+            25, 티본스테이크-1
+            """)
+    @ParameterizedTest
+    void specialDiscount(int visitDay, String orderMenusInput) {
+        // given
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(List.of(orderMenusInput));
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
+
+        // when
+        reservation.generateVisitDate(visitDay);
+        reservation.generateOrders(orderMenuDtoList);
+
+        Optional<Discount> discount = specialDiscountPolicy.calculateDiscountAmount(reservation);
+
+        // then
+        assertThat(discount).isNotEmpty();
+        assertThat(discount).get()
+                .extracting("type").isEqualTo(DiscountType.SPECIAL);
+        assertThat(discount).get()
+                .extracting("amount").isEqualTo(-1_000);
+    }
+
+    @DisplayName("특별 할인 적용 날이 아닌 경우 적용되지 않는다.")
+    @CsvSource(textBlock = """
+            1, 티본스테이크-1
+            11, 티본스테이크-1
+            26, 티본스테이크-1
+            """)
+    @ParameterizedTest
+    void specialDiscountNone(int visitDay, String orderMenusInput) {
+        // given
+        OrderMenusDto orderMenusDto = OrderMenusConverter.convert(List.of(orderMenusInput));
+        List<OrderMenuDto> orderMenuDtoList = orderMenusDto.orderMenus();
+
+        // when
+        reservation.generateVisitDate(visitDay);
+        reservation.generateOrders(orderMenuDtoList);
+
+        Optional<Discount> discount = specialDiscountPolicy.calculateDiscountAmount(reservation);
 
         // then
         assertThat(discount).isEmpty();
