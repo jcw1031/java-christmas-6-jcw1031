@@ -3,6 +3,7 @@ package christmas.domain.benefits.discount;
 import christmas.dto.DiscountDto;
 import christmas.dto.DiscountsDto;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Discounts {
@@ -21,7 +22,7 @@ public class Discounts {
     }
 
     public List<Discount> getDiscounts() {
-        return discounts;
+        return Collections.unmodifiableList(discounts);
     }
 
     public List<Discount> getDiscountsTypeOf(DiscountType discountType) {
